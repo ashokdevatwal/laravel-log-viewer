@@ -4,6 +4,10 @@ namespace Rap2hpoutre\LaravelLogViewer;
 
 use Illuminate\Support\ServiceProvider;
 
+use Illuminate\Routing\Router;
+
+use Rap2hpoutre\LaravelLogViewer\LogViewerBasicAuthMiddleware;
+
 class LaravelLogViewerServiceProvider extends ServiceProvider
 {
     /**
@@ -29,6 +33,10 @@ class LaravelLogViewerServiceProvider extends ServiceProvider
                 __DIR__.'/../../config/logviewer.php' => $this->config_path('logviewer.php'),
             ]);
         }
+
+        $router = $this->app->make(Router::class);
+        $router->aliasMiddleware('auth.logviewer', LogViewerBasicAuthMiddleware::class);
+
     }
 
     /**
